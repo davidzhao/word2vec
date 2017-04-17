@@ -1,0 +1,6 @@
+package: .
+import:
+- package: github.com/sajari/word2vec
+  subpackages:
+  - partition
+- package: github.com/ziutek/blas

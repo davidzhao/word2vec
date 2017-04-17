@@ -1,0 +1,10 @@
+hash: d7ae7e659a78c2f7c8dd005c8aa3de408b338a89c9a4f2ed000cd31c80325d22
+updated: 2017-04-16T22:30:06.550755589-07:00
+imports:
+- name: github.com/sajari/word2vec
+  version: 954b0edbef2876e22fb8165536e275662308217d
+  subpackages:
+  - partition
+- name: github.com/ziutek/blas
+  version: 58548894c23bb27c8098a88bb48288062bef797a
+testImports: []

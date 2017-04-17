@@ -22,7 +22,7 @@ type Model struct {
 func FromReader(r io.Reader) (*Model, error) {
 	br := bufio.NewReader(r)
 	var size, dim int
-	n, err := fmt.Fscanln(r, &size, &dim)
+	n, err := fmt.Fscanln(br, &size, &dim)
 	if err != nil {
 		return nil, err
 	}
@@ -45,14 +45,24 @@ func FromReader(r io.Reader) (*Model, error) {
 		w = w[:len(w)-1]
 
 		v := Vector(raw[dim*i : m.dim*(i+1)])
-		if err := binary.Read(br, binary.LittleEndian, v); err != nil {
-			return nil, err
+		if rErr := binary.Read(br, binary.LittleEndian, v); rErr != nil {
+			return nil, rErr
 		}
 
 		v.Normalise()
 
-		if _, err := br.ReadByte(); err != nil {
-			return nil, err
+		b, err := br.ReadByte()
+		if err != nil {
+			if i != size-1 {
+				return nil, err
+			}
+			// fmt.Printf("error reading byte at %d\n", i)
+			//
+		}
+		if b != byte('\n') {
+			if err := br.UnreadByte(); err != nil {
+				return nil, err
+			}
 		}
 
 		m.words[w] = v
