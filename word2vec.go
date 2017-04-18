@@ -49,7 +49,8 @@ func FromReader(r io.Reader) (*Model, error) {
 			return nil, rErr
 		}
 
-		v.Normalise()
+		// davidzhao: commented out since we don't want normalized vectors
+		// v.Normalise()
 
 		b, err := br.ReadByte()
 		if err != nil {
